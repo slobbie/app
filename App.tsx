@@ -10,9 +10,9 @@
 
 import React from 'react';
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
+  SafeAreaView, //최상단 최하단의 공간을 확보 모바일이기때문에
+  ScrollView, // 내부의 컨텐츠가 길어질때 스크롤이된다.
+  StatusBar, // 배터리 표시같은 영역
   StyleSheet,
   Text,
   useColorScheme,
