@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import * as React from 'react';
 import {NavigationContainer, ParamListBase} from '@react-navigation/native';
 import {
@@ -6,7 +7,9 @@ import {
 } from '@react-navigation/native-stack';
 import {
   Button,
+  Dimensions,
   Pressable,
+  StyleSheet,
   Text,
   TouchableHighlight,
   TouchableNativeFeedback,
@@ -69,6 +72,7 @@ function DetailsScreen({navigation}: DetailsScreenProps) {
 
 const Stack = createNativeStackNavigator();
 function App() {
+  const [modal, setModal] = React.useState<Boolean>(true);
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
@@ -81,8 +85,47 @@ function App() {
           {props => <DetailsScreen {...props} />}
         </Stack.Screen>
       </Stack.Navigator>
+      {modal && (
+        <Pressable onPress={() => setModal(false)} style={styles.modal}>
+          <View style={styles.modalInner}>
+            <View style={{flex: 1, backgroundColor: 'yellow'}}>
+              <Text>모달본문</Text>
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <Pressable style={{flex: 1, alignItems: 'center'}}>
+                <Text>네</Text>
+              </Pressable>
+              <Pressable style={{flex: 1, alignItems: 'center'}}>
+                <Text>아니요</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Pressable>
+      )}
     </NavigationContainer>
   );
 }
 // Stack.Screen 용도는 같은 다만 2번째 경우는 컴포넌트에 추가적인 props를 넘겨 줄때 사용한다.
+const styles = StyleSheet.create({
+  modal: {
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    ...StyleSheet.absoluteFillObject,
+    justifyContent: 'center',
+  },
+  modalInner: {
+    backgroundColor: 'orange',
+    height: 300,
+    marginHorizontal: 50,
+    width: Dimensions.get('window').width - 100,
+    borderRadius: 20,
+    padding: 20,
+    // ios 에서만 적용
+    shadowColor: 'black',
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+    textShadowOffset: {width: 5, height: 5},
+    // android
+    elevation: 15,
+  },
+});
 export default App;
