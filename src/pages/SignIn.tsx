@@ -57,12 +57,12 @@ function SignIn({navigation}: SignInScreenProps) {
         userSlice.actions.setUser({
           name: response.data.data.name,
           email: response.data.data.email,
-          accessToken: response.data.data.accessToken,
+          accessToken: response.data.data.accessToken, // 유효기간 10분 , 5분 , 길면 1시간
         }),
       );
       await EncryptedStorage.setItem(
         'refreshToken',
-        response.data.data.refreshToken,
+        response.data.data.refreshToken, // 시간 연장 토큰 ,  리플레쉬토큰이랑 엑세스 토큰은 나눠서 저장하는것이 좋다.
       );
     } catch (error) {
       const errorResponse = (error as AxiosError).response;
