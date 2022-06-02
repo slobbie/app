@@ -65,7 +65,7 @@ function Complete() {
       includeBase64: true,
       //핸드폰 촬영 방향을 위한
       includeExif: true,
-      // saveToPhotos: true,
+      saveToPhotos: true,
     })
       .then(onResponse)
       .catch(console.log);
