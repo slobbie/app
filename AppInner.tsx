@@ -18,6 +18,7 @@ import {Alert} from 'react-native';
 import userSlice from './src/slices/user';
 import Config from 'react-native-config';
 import EncryptedStorage from 'react-native-encrypted-storage';
+import usePermissions from './src/hooks/usePermissions';
 
 export type LoggedInParamList = {
   Orders: undefined;
@@ -39,29 +40,11 @@ function AppInner() {
   const isLoggedIn = useSelector((state: RootState) => !!state.user.email);
   console.log('isLoggedIn', isLoggedIn);
 
+  usePermissions();
+
   const [socket, disconnect] = useSocket();
   // scoket id 는  키, 값 의 형태
   // 'userInfo', {name: '홍길동', birth: 1994}
-
-  // // 로그인이 되었을시에만 소켓연결
-  // useEffect(() => {
-  //   //서버에서 데이터를 받는거는 콜백 형식이여야한다.
-  //   const helloCallback = (data: any) => {
-  //     console.log(data);
-  //   };
-  //   if (socket && isLoggedIn) {
-  //     console.log(socket);
-  //     // emit 서버에게 데이터를 보내는것
-  //     socket.emit('login', 'hello');
-  //     // on 서버에게 데이터를 받는것
-  //     socket.on('hello', helloCallback);
-  //   }
-  //   return () => {
-  //     if (socket) {
-  //       socket.off('hello', helloCallback);
-  //     }
-  //   };
-  // }, [isLoggedIn, socket]);
 
   // 앱 실행 시 토큰 있으면 로그인하는 코드
   useEffect(() => {
